@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <title>To-Do List</title>
+
+        <link rel="stylesheet" href="css/styles.css">
+    </head>
+
+    <body>
+        <div class="box">
+            <h1>To-Do List</h1>
+        </div>
+
+        <div class="box">
+            <%ejes.forEach(function(items){ %>
+                <form action="/delete" method="post">
+                    <div class="item">
+                        <input type="checkbox" value="<%= items._id %>" name="checkbox1" onchange="this.form.submit()">
+                        <p><%= items.name %></p>
+                    </div>
+                </form>
+
+            <% }) %>
+            
+
+            <form class="item" action="/" method="post">
+                <input type="text" name="one" placeholder="Enter the task" required>
+                <button type="submit">+</button>
+            </form>
+        </div>
+    </body>
+</html>
