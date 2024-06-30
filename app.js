@@ -1,11 +1,15 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 
+// Creating an instance of express
 var app = express();
 
+// Setting the view engine to EJS (Embedded JavaScript)
 app.set("view engine", "ejs");
 
+// Parsing URL-encoded bodies (as sent by HTML forms)
 app.use(express.urlencoded({extended: true}));
+// Serving static files from the 'public' directory
 app.use(express.static("public"));
 
 // importing mongoose
@@ -26,7 +30,7 @@ const todo = new item({
     name: "Create some videos"
 });
 
-//todo.save()
+//code line : todo.save()
 
 
 
@@ -53,9 +57,13 @@ todo3.save();
 todo4.save();
 */
 
+
+// Handling GET requests to the root URL ("/")
 app.get("/", function(req, res){
+    // Finding all items (tasks) in the collection
     item.find({})
         .then(foundItem => {
+             // Rendering the 'list' view and passing the found items to it
             res.render("list", {ejes: foundItem});
         })
         .catch(err => {
@@ -63,10 +71,12 @@ app.get("/", function(req, res){
         });
 });
 
+// Handling POST requests to the "/delete" URL
 app.post("/delete", function(req, res){
     const checked = req.body.checkbox1;
     item.findByIdAndDelete(checked)
         .then(() => {
+            // Logging a message to the console upon successful deletion
             console.log("Deleted");
             res.redirect("/");
         })
@@ -79,9 +89,11 @@ app.post("/delete", function(req, res){
 
 
 
-// post for inseting
+// Handling POST requests to the root URL ("/") for inserting new tasks
 app.post("/", function(req, res){
+    // Getting the name of the new task from the request body
     const ItemName = req.body.one;
+    // Creating a new task with the provided name
     const todo5 = new item({
         name: ItemName
     });
